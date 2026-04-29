@@ -86,44 +86,45 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen selection:bg-brand-gold selection:text-white">
+    <div className="min-h-screen selection:bg-brand-gold selection:text-white noise-overlay">
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "bg-brand-cream/90 backdrop-blur-md py-4" : "bg-transparent py-8"
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+        isScrolled ? "bg-brand-cream/80 backdrop-blur-xl py-4" : "bg-transparent py-10"
       }`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <div className="max-w-[1440px] mx-auto px-8 md:px-16 flex justify-between items-center">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-2xl font-light tracking-widest uppercase cursor-pointer"
+            className="text-2xl md:text-3xl font-light tracking-[0.2em] uppercase cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            RTK <span className="font-bold">Aesthetics</span>
+            RTK <span className="font-bold text-brand-gold">Aesthetics</span>
           </motion.div>
           
-          <div className="hidden md:flex gap-12 items-center">
+          <div className="hidden lg:flex gap-16 items-center">
             {['Services', 'Facials', 'Waxing', 'Contact'].map((item) => (
               <button 
                 key={item}
                 onClick={() => scrollTo(item.toLowerCase())}
-                className="text-xs uppercase tracking-[0.3em] font-sans font-medium hover:text-brand-gold transition-colors"
+                className="text-[10px] uppercase tracking-[0.4em] font-sans font-medium hover:text-brand-gold transition-all duration-300 relative group"
               >
                 {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-gold transition-all duration-300 group-hover:w-full" />
               </button>
             ))}
             <button 
               onClick={() => setIsBookingOpen(true)}
-              className="bg-brand-charcoal text-white text-[11px] uppercase tracking-[0.3em] px-8 py-4 font-sans hover:bg-brand-gold transition-colors"
+              className="border border-brand-charcoal px-10 py-4 text-[10px] uppercase tracking-[0.4em] font-sans hover:bg-brand-charcoal hover:text-white transition-all duration-500"
             >
-              Book Now
+              Request Session
             </button>
           </div>
 
           <button 
-            className="md:hidden text-brand-charcoal"
+            className="lg:hidden text-brand-charcoal p-2 border border-brand-charcoal/10 rounded-full"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
@@ -224,150 +225,269 @@ export default function App() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-brand-cream">
-        {/* Background Decorative Elements */}
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-brand-sand rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-        <div className="absolute top-1/2 -right-24 w-64 h-64 bg-brand-gold rounded-full mix-blend-overlay filter blur-[100px] opacity-10"></div>
+      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-brand-silk">
+        {/* Decorative Floating Elements */}
+        <motion.div 
+          animate={{ y: [0, -30, 0], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute top-1/4 -left-20 w-80 h-80 bg-brand-gold rounded-full blur-[100px]" 
+        />
+        <motion.div 
+          animate={{ y: [0, 40, 0], opacity: [0.1, 0.15, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-brand-sand rounded-full blur-[120px]" 
+        />
 
-        <div className="absolute inset-0 opacity-30 grayscale contrast-125">
+        <div className="absolute inset-0 opacity-[0.15] grayscale mix-blend-multiply">
            <img 
-            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=2070&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=2070&auto=format&fit=crop" 
             alt="Spa environment"
             className="w-full h-full object-cover"
           />
         </div>
         
-        <div className="relative z-10 text-center px-6">
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-10"
           >
-            <span className="text-brand-gold font-sans text-[11px] uppercase tracking-[0.4em] font-bold">
-              Certified Medical Aesthetician & MUA
+            <span className="text-brand-gold font-sans text-[10px] uppercase tracking-[0.5em] font-bold">
+              EST. 2024 — Nepean, Ontario
             </span>
           </motion.div>
           
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 1 }}
-            className="font-serif text-7xl md:text-9xl mb-12 italic leading-[0.85] font-light"
-          >
-            Atmospheric <br /> 
-            <span className="text-brand-gold">Beauty.</span>
-          </motion.h1>
-          
-          <motion.p 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="max-w-xs mx-auto text-brand-charcoal/70 mb-12 text-sm italic leading-relaxed"
+            transition={{ delay: 0.2, duration: 1.5 }}
+            className="relative"
           >
-            Home-based professional care in Nepean, Ontario. Specialized in clinical results with a luxury touch.
+            <motion.h1 
+              initial={{ opacity: 0, scale: 0.98, y: 40 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif text-8xl md:text-[10rem] lg:text-[13rem] mb-12 sm:mb-8 leading-[0.75] font-light tracking-tight text-brand-charcoal"
+            >
+              The Art of <br /> 
+              <span className="text-brand-gold italic">Beauty.</span>
+            </motion.h1>
+            
+            {/* Overlapping text border for style */}
+            <div className="hidden lg:block absolute -top-8 left-1/2 -translate-x-1/2 font-serif text-[15rem] leading-[0.75] text-border opacity-5 pointer-events-none select-none">
+              Beauty.
+            </div>
+          </motion.div>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 1 }}
+            className="max-w-sm mx-auto text-brand-charcoal/80 mb-16 text-xs uppercase tracking-[0.2em] font-medium leading-loose"
+          >
+            Certified Medical Aesthetician & MUA <br />
+            Clinical Results meets Atmospheric Luxury
           </motion.p>
           
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            transition={{ delay: 1.2, duration: 1 }}
+            className="flex flex-col sm:flex-row gap-12 justify-center items-center"
           >
             <button 
               onClick={() => setIsBookingOpen(true)}
-              className="bg-brand-charcoal text-white px-10 py-5 font-sans text-xs uppercase tracking-[0.3em] hover:bg-brand-gold transition-colors group"
+              className="group relative overflow-hidden bg-brand-charcoal text-white px-12 py-6 text-[10px] uppercase tracking-[0.4em] transition-all duration-500"
             >
-              Book Treatment
+              <span className="relative z-10">Request a Consultation</span>
+              <div className="absolute inset-0 bg-brand-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16, 1, 0.3, 1]" />
             </button>
-            <div className="hidden sm:block w-24 h-[1px] bg-brand-gold"></div>
+            <div className="hidden sm:block w-32 h-[1px] bg-brand-gold/40"></div>
           </motion.div>
+        </div>
+        
+        {/* Hero Bottom Info */}
+        <div className="absolute bottom-12 left-8 md:left-16 hidden md:block">
+           <div className="font-sans text-[9px] uppercase tracking-[0.4em] text-brand-gold mb-2 font-bold">Studio Location</div>
+           <div className="text-[11px] uppercase tracking-widest">{CONTACT.address}</div>
+        </div>
+        
+        <div className="absolute bottom-12 right-8 md:right-16 hidden md:block">
+           <div className="font-sans text-[9px] uppercase tracking-[0.4em] text-brand-gold mb-2 font-bold">Connect</div>
+           <div className="text-[11px] uppercase tracking-widest">@RTK.Aesthetics</div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="services" className="py-24 px-6 max-w-5xl mx-auto text-center">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+      <section id="services" className="py-32 px-8 md:px-16 max-w-7xl mx-auto overflow-hidden">
+        <div className="grid lg:grid-cols-2 gap-24 items-center">
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="relative"
           >
-            <img 
-              src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=2070&auto=format&fit=crop" 
-              alt="Skincare detail"
-              className="rounded-2xl shadow-2xl"
-            />
-            <div className="absolute -bottom-6 -right-6 bg-brand-gold p-8 rounded-2xl hidden md:block">
-              <Sparkles className="text-white" size={32} />
+            {/* Arched Image Mask */}
+            <div className="rounded-t-full overflow-hidden aspect-[4/5] shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=2070&auto=format&fit=crop" 
+                alt="Skincare detail"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2s]"
+              />
             </div>
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -bottom-10 -right-10 w-40 h-40 bg-brand-gold/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-brand-gold/20"
+            >
+              <div className="text-[8px] uppercase tracking-[0.3em] font-bold text-brand-gold text-center p-6">
+                Certified • Professional • Medical
+              </div>
+            </motion.div>
           </motion.div>
           
           <div className="text-left">
-            <span className="text-brand-gold uppercase tracking-[0.3em] text-[10px] font-bold mb-4 block">Our Philosophy</span>
-            <h2 className="font-serif text-4xl mb-6">Home-Based Luxury, Professional Excellence</h2>
-            <p className="text-brand-charcoal/70 leading-relaxed mb-8">
-              Welcome to RTK Aesthetics. I believe that skincare is more than just a routine—it's a form of self-care 
-              and confidence. As a certified professional medical aesthetician, I combine clinical precision with 
-              the comfort of a private, home-based studio in Nepean.
-            </p>
-            <ul className="space-y-4 text-sm font-medium uppercase tracking-wider">
-              <li className="flex items-center gap-3 text-brand-charcoal/80">
-                <Check size={16} className="text-brand-gold" /> Personalized Treatment Plans
-              </li>
-              <li className="flex items-center gap-3 text-brand-charcoal/80">
-                <Check size={16} className="text-brand-gold" /> Professional Grade Equipment
-              </li>
-              <li className="flex items-center gap-3 text-brand-charcoal/80">
-                <Check size={16} className="text-brand-gold" /> Exclusive One-on-One Service
-              </li>
-            </ul>
+            <motion.span 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-brand-gold uppercase tracking-[0.5em] text-[10px] font-bold mb-6 block"
+            >
+              Our Philosophy
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-serif text-5xl md:text-7xl mb-8 font-light italic leading-tight"
+            >
+              Bespoke Care, <br />Clinical precision.
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-brand-charcoal/70 leading-relaxed mb-10 text-lg md:text-xl font-light italic"
+            >
+              RTK Aesthetics is a private, home-based sanctuary in Nepean where high-end medical 
+              technology meets the tranquility of a boutique spa.
+            </motion.p>
+            <div className="grid sm:grid-cols-2 gap-8">
+              {[
+                "Personalized Treatments",
+                "Clinical Excellence",
+                "Advanced Technology",
+                "Private Studio"
+              ].map((item, i) => (
+                <motion.div 
+                  key={item}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] font-bold text-brand-charcoal/60"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
+                  {item}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Facials Section */}
-      <section id="facials" className="py-24 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-16 items-start bg-white/30 rounded-[60px] p-8 md:p-16 border border-white/50 backdrop-blur-sm shadow-xl">
-            <div className="lg:w-1/3">
-              <span className="text-brand-gold font-sans text-[11px] uppercase tracking-[0.4em] font-bold mb-4 block">Service Menu</span>
-              <h2 className="font-serif text-5xl md:text-6xl mb-8 font-light italic text-brand-charcoal">Atmospheric <br />Facials</h2>
-              <p className="text-brand-charcoal/60 mb-12 max-w-sm italic text-sm">
-                All treatments are tailored to regular, dry, acneic, mature, and oily skin types. 
-              </p>
+      <section id="facials" className="py-32 px-8 md:px-16 relative overflow-hidden bg-brand-silk">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-sand/30 -skew-x-12 translate-x-1/2" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col lg:flex-row gap-24 items-start">
+            <div className="lg:w-2/5">
+              <motion.span 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-brand-gold font-sans text-[10px] uppercase tracking-[0.5em] font-bold mb-6 block"
+              >
+                Service Menu
+              </motion.span>
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="font-serif text-6xl md:text-8xl mb-10 font-light italic text-brand-charcoal leading-[0.85]"
+              >
+                Atmospheric <br />Facials
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-brand-charcoal/60 mb-16 max-w-sm italic text-lg leading-relaxed"
+              >
+                All treatments are bespoke, tailored to your skin's unique composition and goals. 
+              </motion.p>
               
-              <div className="bg-brand-gold/10 p-8 rounded-tr-[40px] border border-brand-gold/20">
-                <h4 className="font-serif text-xl mb-4 italic text-brand-gold">Signature Offer</h4>
-                <div className="flex justify-between items-baseline mb-2">
-                  <span className="text-sm font-medium tracking-tight uppercase">{SERVICES.waxing.special.name}</span>
-                  <span className="text-brand-gold font-bold">${SERVICES.waxing.special.price}</span>
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="bg-brand-charcoal text-white p-12 rounded-tr-[80px] border border-white/5 relative group cursor-default shadow-2xl overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-brand-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <h4 className="font-serif text-2xl mb-6 italic text-brand-gold relative z-10">The Signature Concept</h4>
+                <div className="flex justify-between items-baseline mb-4 relative z-10">
+                  <span className="text-[10px] uppercase tracking-[0.4em] font-bold">{SERVICES.waxing.special.name}</span>
+                  <span className="text-brand-gold font-bold text-xl">${SERVICES.waxing.special.price}</span>
                 </div>
-                <p className="font-sans text-[10px] opacity-60 italic leading-relaxed">
+                <p className="font-sans text-xs opacity-60 italic leading-relaxed relative z-10">
                   {SERVICES.waxing.special.description}
                 </p>
-              </div>
+              </motion.div>
             </div>
             
-            <div className="lg:w-2/3 grid gap-2 w-full">
-              {SERVICES.facials.map((facial) => (
+            <div className="lg:w-3/5 grid gap-4 w-full">
+              {SERVICES.facials.map((facial, i) => (
                 <PriceItem key={facial.name} name={facial.name} price={facial.price} description={facial.description} />
               ))}
               
-              <div className="mt-12">
-                <h4 className="text-brand-gold uppercase tracking-[0.3em] text-[10px] font-bold mb-8">Studio Enhancements</h4>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {SERVICES.addOns.map((add) => (
-                    <div key={add.name} className="flex justify-between items-center p-6 bg-white/40 rounded-2xl border border-brand-gold/10 hover:border-brand-gold/30 transition-colors group">
-                      <div>
-                        <span className="block text-sm font-medium mb-1 group-hover:text-brand-gold transition-colors">{add.name}</span>
-                        {add.recommended && (
-                          <span className="text-[10px] text-brand-gold uppercase tracking-tighter">Recommended</span>
-                        )}
+              <div className="mt-20">
+                <motion.h4 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  className="text-brand-gold uppercase tracking-[0.5em] text-[10px] font-bold mb-10"
+                >
+                  Technical Add-Ons
+                </motion.h4>
+                <div className="grid gap-4">
+                  {SERVICES.addOns.map((add, i) => (
+                    <motion.div 
+                      key={add.name} 
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex justify-between items-center p-8 bg-white/50 backdrop-blur-sm rounded-2xl border border-brand-gold/10 hover:border-brand-gold/40 transition-all duration-500 group cursor-default shadow-sm hover:shadow-md"
+                    >
+                      <div className="flex items-center gap-6">
+                        <div className="w-10 h-10 rounded-full bg-brand-gold/5 flex items-center justify-center text-brand-gold">
+                           {i === 0 ? <Sparkles size={16} /> : <Check size={16} />}
+                        </div>
+                        <div>
+                          <span className="block text-sm font-medium tracking-tight group-hover:text-brand-gold transition-colors">{add.name}</span>
+                          {add.recommended && (
+                            <span className="text-[9px] text-brand-gold uppercase tracking-[0.2em] font-bold">Clinical Recommended</span>
+                          )}
+                        </div>
                       </div>
-                      <span className="text-brand-gold font-sans font-bold">${add.price}</span>
-                    </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-[1px] bg-brand-gold/20" />
+                        <span className="text-brand-gold font-sans font-bold text-lg">${add.price}</span>
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -423,80 +543,104 @@ export default function App() {
       </section>
 
       {/* Featured Images */}
-      <section className="py-24 bg-brand-cream overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 mb-12 flex justify-between items-end">
+      <section className="py-32 bg-brand-silk overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent" />
+        
+        <div className="max-w-[1440px] mx-auto px-8 md:px-16 mb-16 flex flex-col md:flex-row justify-between items-end gap-8">
           <div>
-            <span className="text-brand-gold font-sans text-[10px] uppercase tracking-[0.4em] font-bold mb-4 block">Archive</span>
-            <h2 className="font-serif text-5xl font-light italic">The Gallery</h2>
+            <span className="text-brand-gold font-sans text-[10px] uppercase tracking-[0.5em] font-bold mb-6 block">Archive</span>
+            <h2 className="font-serif text-6xl md:text-8xl font-light italic text-brand-charcoal leading-[0.85]">The <br />Gallery</h2>
           </div>
-          <a href="#" className="hidden sm:flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-medium hover:text-brand-gold transition-all">
-            @RTK.Aesthetics <Instagram size={14} />
-          </a>
+          <motion.a 
+            whileHover={{ x: 10 }}
+            href="#" 
+            className="flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] font-medium text-brand-gold border-b border-brand-gold/30 pb-2"
+          >
+            Explore on Instagram <Instagram size={14} />
+          </motion.a>
         </div>
         
-        <div className="flex gap-6 overflow-x-auto pb-8 snap-x no-scrollbar px-6">
+        <div className="flex gap-8 overflow-x-auto pb-12 snap-x no-scrollbar px-8 md:px-16">
           {[
-            "https://images.unsplash.com/photo-1552693673-1bf958298935?q=80&w=2073&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2070&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop"
-          ].map((src, i) => (
+            { src: "https://images.unsplash.com/photo-1552693673-1bf958298935?q=80&w=2073&auto=format&fit=crop", label: "Bridal Prep" },
+            { src: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop", label: "Skin Renewal" },
+            { src: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2070&auto=format&fit=crop", label: "Aftercare" },
+            { src: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop", label: "Glow Ritual" },
+            { src: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop", label: "The Studio" }
+          ].map((item, i) => (
             <motion.div 
               key={i}
-              className="min-w-[300px] md:min-w-[400px] aspect-[4/5] bg-brand-cream rounded-3xl overflow-hidden snap-center"
-              whileHover={{ scale: 0.98 }}
-              transition={{ duration: 0.5 }}
+              className="min-w-[320px] md:min-w-[450px] aspect-[4/5] bg-brand-cream rounded-[40px] overflow-hidden snap-center relative group"
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <img src={src} alt="Gallery item" className="w-full h-full object-cover" />
+              <img src={item.src} alt={item.label} className="w-full h-full object-cover transition-transform duration-[3s] group-hover:scale-110" />
+              <div className="absolute inset-0 bg-brand-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-10">
+                <span className="text-white text-[10px] uppercase tracking-[0.4em] font-bold">{item.label}</span>
+              </div>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 px-6 max-w-7xl mx-auto">
-        <div className="bg-brand-charcoal text-white rounded-[60px] p-12 md:p-24 overflow-hidden relative border border-white/10">
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-gold/10 blur-[100px]" />
+      <section id="contact" className="py-32 px-8 md:px-16 max-w-[1440px] mx-auto">
+        <div className="bg-brand-charcoal text-white rounded-[80px] p-12 md:p-24 overflow-hidden relative border border-white/5 shadow-2xl">
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 15, repeat: Infinity }}
+            className="absolute top-0 right-0 w-2/3 h-full bg-brand-gold/20 blur-[120px]" 
+          />
           
-          <div className="grid lg:grid-cols-2 gap-16 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-24 relative z-10">
             <div>
-              <h2 className="font-serif text-5xl md:text-7xl mb-8 leading-tight font-light italic">Artistic <br /><span className="text-brand-gold">Atmosphere.</span></h2>
-              <p className="text-white/60 mb-12 text-sm max-w-sm italic">
-                Studio sessions are by appointment only. Experience professional medical grade care in a luxury setting.
+              <motion.span 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-brand-gold font-sans text-[10px] uppercase tracking-[0.5em] font-bold mb-6 block"
+              >
+                Inquiries
+              </motion.span>
+              <h2 className="font-serif text-6xl md:text-8xl mb-12 leading-[0.85] font-light italic">Artistic <br /><span className="text-brand-gold">Atmosphere.</span></h2>
+              <p className="text-white/40 mb-16 text-lg max-w-sm italic leading-relaxed">
+                Experience clinical medical grade care in an immersive luxury setting. All sessions by private appointment.
               </p>
               
-              <div className="space-y-8">
-                <a href={`tel:${CONTACT.phone}`} className="flex items-center gap-6 group">
-                  <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-brand-gold transition-all duration-300">
-                    <Phone size={20} />
+              <div className="space-y-12">
+                <a href={`tel:${CONTACT.phone}`} className="flex items-center gap-8 group">
+                  <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-brand-gold group-hover:border-brand-gold transition-all duration-500">
+                    <Phone size={24} className="group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <span className="block text-[10px] uppercase tracking-[0.4em] text-white/40 mb-1 font-bold">Inquiries</span>
-                    <span className="text-xl font-sans font-light tracking-tighter">{CONTACT.phone}</span>
+                    <span className="block text-[10px] uppercase tracking-[0.4em] text-white/40 mb-2 font-bold">Studio Phone</span>
+                    <span className="text-2xl font-sans font-light tracking-widest group-hover:text-brand-gold transition-colors">{CONTACT.phone}</span>
                   </div>
                 </a>
                 
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center">
-                    <MapPin size={20} />
+                <div className="flex items-center gap-8 group">
+                  <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center">
+                    <MapPin size={24} />
                   </div>
                   <div>
-                    <span className="block text-[10px] uppercase tracking-[0.4em] text-white/40 mb-1 font-bold">Location</span>
-                    <span className="text-sm opacity-80">{CONTACT.address}</span>
+                    <span className="block text-[10px] uppercase tracking-[0.4em] text-white/40 mb-2 font-bold">Studio Location</span>
+                    <span className="text-sm md:text-md opacity-80 uppercase tracking-widest">{CONTACT.address}</span>
                   </div>
                 </div>
               </div>
             </div>
             
             <div className="hidden lg:flex items-center justify-center">
-              <div className="bg-white/5 backdrop-blur-sm p-12 border border-white/10 rounded-tr-[80px] text-center w-full max-w-md">
-                <div className="font-serif text-4xl mb-6 font-light italic text-brand-gold">Studio Hours</div>
-                <div className="text-2xl font-sans font-light mb-8 tracking-tighter">Open Until 10:00 PM</div>
-                <div className="w-full h-[1px] bg-brand-gold/30 mb-8 mx-auto"></div>
-                <div className="flex justify-center gap-8">
-                  <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-[10px] italic">IG</div>
-                  <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-[10px] italic">FB</div>
+              <div className="bg-white/5 backdrop-blur-md p-16 border border-white/10 rounded-tr-[120px] rounded-bl-[120px] text-center w-full max-w-md shadow-inner relative overflow-hidden group">
+                <div className="absolute inset-0 bg-brand-gold/5 translate-y-full group-hover:translate-y-0 transition-transform duration-[1s]" />
+                <div className="relative z-10">
+                  <div className="font-serif text-5xl mb-8 font-light italic text-brand-gold">Schedule</div>
+                  <div className="text-3xl font-sans font-light mb-12 tracking-widest">Open Until 10:00 PM</div>
+                  <div className="w-24 h-[1px] bg-brand-gold/30 mb-12 mx-auto"></div>
+                  <div className="flex justify-center gap-10">
+                    <a href="#" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-[10px] italic hover:border-brand-gold hover:text-brand-gold transition-all duration-300">IG</a>
+                    <a href="#" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-[10px] italic hover:border-brand-gold hover:text-brand-gold transition-all duration-300">FB</a>
+                  </div>
                 </div>
               </div>
             </div>
